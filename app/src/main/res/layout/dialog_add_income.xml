@@ -1,0 +1,24 @@
+<!-- dialog_add_income.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Income Amount"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/edit_text_income"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Income amount"
+        android:inputType="numberDecimal"/>
+
+</LinearLayout>
