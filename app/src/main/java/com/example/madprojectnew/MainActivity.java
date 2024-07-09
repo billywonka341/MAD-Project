@@ -112,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
             String category = inputCategory.getText().toString();
             String description = inputDescription.getText().toString();
 
+            double TotalIncomeSum = dbHelperForIncome.getTotalIncome();
+            double totalAmount = dbHelper.getSumOfAmounts();
+
+            int check = (int) (TotalIncomeSum - totalAmount);
+
             boolean isValid = true;
 
             // Validate amount
@@ -123,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                     double amount = Double.parseDouble(amountStr);
                     if (amount < 0) {
                         inputAmount.setError("Amount cannot be negative");
+                        isValid = false;
+                    } else if (check - amount < 0) {
+                        inputAmount.setError("Insufficient income. Add more income first.");
                         isValid = false;
                     }
                 } catch (NumberFormatException e) {
@@ -152,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 
