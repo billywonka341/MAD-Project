@@ -37,6 +37,18 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public int updateItem(long id, String amount, String category, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_AMOUNT, amount);
+        values.put(COLUMN_CATEGORY, category);
+        values.put(COLUMN_DESCRIPTION, description);
+
+        // Updating row
+        return db.update(TABLE_NAME, values, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+    }
+
     public long addItem(String amount, String category, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             dbHelperForIncome = new DBHelperForIncome(this, userId+"_income.db");
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            itemAdapter = new ItemAdapter(dbHelper.getAllItems(), dbHelper, this, this::updateExpense);
+            itemAdapter = new ItemAdapter(dbHelper.getAllItems(), dbHelper,dbHelperForIncome, this, this::updateExpense);
             recyclerView.setAdapter(itemAdapter);
 
 
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void updateExpense() {
+    void updateExpense() {
         double totalAmount = dbHelper.getSumOfAmounts();
         double totalfoodsum = dbHelper.getSumOfAmountsForFood();
         double totaltravelsum = dbHelper.getSumOfAmountsForTravel();
