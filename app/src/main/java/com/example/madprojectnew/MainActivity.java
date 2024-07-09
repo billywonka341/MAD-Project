@@ -101,17 +101,60 @@ public class MainActivity extends AppCompatActivity {
         final EditText inputDescription = viewInflated.findViewById(R.id.input_description);
 
         builder.setView(viewInflated);
-        builder.setPositiveButton("Add", (dialog, which) -> {
-            String amount = inputAmount.getText().toString();
+        builder.setPositiveButton("Add", null); // Set to null initially
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Override the onClick listener for the positive button to handle validation
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String amountStr = inputAmount.getText().toString();
             String category = inputCategory.getText().toString();
             String description = inputDescription.getText().toString();
-            dbHelper.addItem(amount, category, description);
-            itemAdapter.updateData(dbHelper.getAllItems());
-            updateExpense();
+
+            boolean isValid = true;
+
+            // Validate amount
+            if (amountStr.isEmpty()) {
+                inputAmount.setError("Amount is required");
+                isValid = false;
+            } else {
+                try {
+                    double amount = Double.parseDouble(amountStr);
+                    if (amount < 0) {
+                        inputAmount.setError("Amount cannot be negative");
+                        isValid = false;
+                    }
+                } catch (NumberFormatException e) {
+                    inputAmount.setError("Invalid amount format");
+                    isValid = false;
+                }
+            }
+
+            // Validate category
+            if (category.isEmpty()) {
+                inputCategory.setError("Category is required");
+                isValid = false;
+            }
+
+            // Validate description
+            if (description.isEmpty()) {
+                inputDescription.setError("Description is required");
+                isValid = false;
+            }
+
+            // If all validations pass, add the item to the database
+            if (isValid) {
+                dbHelper.addItem(String.valueOf(Double.parseDouble(amountStr)), category, description);
+                itemAdapter.updateData(dbHelper.getAllItems());
+                updateExpense();
+                dialog.dismiss();
+            }
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-        builder.show();
     }
+
+
+
 
     private void movetoProfile() {
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
