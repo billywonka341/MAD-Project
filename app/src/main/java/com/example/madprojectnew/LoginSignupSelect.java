@@ -56,6 +56,11 @@ public class LoginSignupSelect extends AppCompatActivity {
         finish();
     }
 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_right);
+    }
+
     private void movetologin()
     {
         startActivity(new Intent(LoginSignupSelect.this, LoginActivity.class));

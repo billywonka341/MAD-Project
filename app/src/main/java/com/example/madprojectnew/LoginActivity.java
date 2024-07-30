@@ -156,6 +156,11 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_right);
+    }
+
     private void init()
     {
         EdgeToEdge.enable(this);
